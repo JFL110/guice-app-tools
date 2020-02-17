@@ -48,4 +48,13 @@ public class TestStringUtils {
 		
 		assertFalse(StringUtils.isNotBlank("			"));
 	}
+	
+	
+	/**
+	 * Coverage bump
+	 */
+	@Test
+	public void testInstantiation() {
+		new StringUtils();
+	}
 }
