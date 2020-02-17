@@ -1,7 +1,7 @@
 def extraProperties = new Properties()
 new File("${rootDir}/version.properties").withInputStream { extraProperties.load(it) }
 def credentialsFile = new File("${rootDir}/credentials-DO-NOT-COMMIT.properties");
-if(credentialsFile.exists()){credentialsFile.withInputStream { extraProperties.load(it) }} else {println "No credentials file found [" + credentialsFile + "]"}
+if(credentialsFile.exists()){credentialsFile.withInputStream { extraProperties.load(it) }} else {println "No credentials file found [" + credentialsFile + "], using username " +  System.getenv("USERNAME")}
 
 def _groupId = "org.jfl110"
 def _artifactId = "guice-app-tools"
