@@ -1,5 +1,7 @@
 def extraProperties = new Properties()
 new File("${rootDir}/version.properties").withInputStream { extraProperties.load(it) }
+def credentialsFile = new File("${rootDir}/credentials-DO-NOT-COMMIT.properties");
+if(credentialsFile.exists()){credentialsFile.withInputStream { extraProperties.load(it) }} else {println "No credentials file found [" + credentialsFile + "]"}
 
 def _groupId = "org.jfl110"
 def _artifactId = "guice-app-tools"
@@ -43,8 +45,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/JFL110/guice-app-tools")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
+                username = extraProperties["gprUser"] ?: System.getenv("USERNAME")
+                password = extraProperties["gprKey"] ?: System.getenv("PASSWORD")
             }
         }
     }
