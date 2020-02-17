@@ -1,6 +1,6 @@
 def _groupId = "org.jfl110"
 def _artifactId = "guice-app-tools"
-def _version = "0.0.1-SNAPSHOT"
+def _version = "0.0.3-SNAPSHOT"
 
 buildscript {  
   repositories {
@@ -35,6 +35,26 @@ jacocoTestReport {
 test.finalizedBy(jacocoTestReport)
 
 publishing {
+  repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/JFL110/guice-app-tools")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
+            }
+        }
+    }
+
+    publications {
+        gpr(MavenPublication) {
+           groupId _groupId
+	   artifactId _artifactId
+	   version _version
+           from(components.java)
+        }
+    }
+
     publications {
        mavenJava(MavenPublication) {
  	   groupId _groupId
