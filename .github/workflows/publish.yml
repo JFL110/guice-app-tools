@@ -23,5 +23,5 @@ jobs:
     - name: Publish
       run: ./gradlew publish
       env:
-        USERNAME: JFL110
-        PASSWORD: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+        USERNAME: ${{ github.actor }}
+        PASSWORD: ${{ secrets.GITHUB_TOKEN }}
