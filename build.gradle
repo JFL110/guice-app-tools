@@ -1,6 +1,9 @@
+def extraProperties = new Properties()
+new File("${rootDir}/version.properties").withInputStream { extraProperties.load(it) }
+
 def _groupId = "org.jfl110"
 def _artifactId = "guice-app-tools"
-def _version = "0.0.3-SNAPSHOT"
+def _version = extraProperties['versionCode']
 
 buildscript {  
   repositories {
