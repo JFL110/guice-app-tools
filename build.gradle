@@ -12,11 +12,25 @@ buildscript {
 apply plugin: 'java' 
 apply plugin: 'maven' // Just for the createPom task
 apply plugin: 'maven-publish'
+apply plugin: 'jacoco'
+
 
 repositories { 
   mavenLocal()
   jcenter()
   mavenCentral()
+}
+
+jacoco {
+  toolVersion = '0.7.1.201405082137'
+}
+
+jacocoTestReport {
+ reports {
+    html.enabled = true
+    xml.enabled = true
+    csv.enabled = false
+ }
 }
 
 publishing {
