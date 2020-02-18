@@ -19,4 +19,4 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Publish
-      run: ./gradlew publish -DUSERNAME=${{ github.actor }} -DPASSWORD=${{ secrets.GITHUB_TOKEN }}
+      run: ./gradlew publish -Pusername=${{ github.actor }} -Ppassword=${{ secrets.GITHUB_TOKEN }}
