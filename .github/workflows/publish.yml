@@ -19,6 +19,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build
-      run: ./gradlew build -Pusername=MissionResult -Ppassword=${{ secrets.GP_PUBLISH_TOKEN }}
+      run: ./gradlew build -Pusername=JFL110 -Ppassword=${{ secrets.GP_PUBLISH_TOKEN }}
     - name: Publish
-      run: ./gradlew publish -Pusername=MissionResult -Ppassword=${{ secrets.GP_PUBLISH_TOKEN }}
+      run: ./gradlew publish -Pusername=JFL110 -Ppassword=${{ secrets.GP_PUBLISH_TOKEN }}
