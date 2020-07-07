@@ -5,3 +5,4 @@
 /.settings/
 /.gradle/
 /bin/
+/credentials-DO-NOT-COMMIT.properties
