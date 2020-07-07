@@ -6,6 +6,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+import org.jfl110.app.NowModule;
+import org.jfl110.app.NowSupplier;
+import org.jfl110.app.ZonedNowSupplier;
 import org.junit.Test;
 
 import com.google.inject.Guice;

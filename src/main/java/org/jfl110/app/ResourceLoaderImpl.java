@@ -1,7 +1,6 @@
 package org.jfl110.app;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -9,8 +8,6 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import javax.inject.Inject;
-
-import org.jfl110.util.ExceptionUtils;
 
 /**
  * Implementation of ResourceLoader that uses ClassLoader
@@ -31,22 +28,15 @@ class ResourceLoaderImpl implements ResourceLoader {
 	public String loadAsString(String resourceName) {
 		return loadAsStringIfExists(resourceName).orElseThrow(() -> new IllegalArgumentException("No resource named [" + resourceName + "] found"));
 	}
-	
-	
-	@Override
-	public InputStream loadAsInputStream(String resourceName) {
-		URL resource = getResourceURL(resourceName);
-		logger.log("Loading resource named [" + resourceName + "] at [" + resource + "]");
-		if(resource == null) {
-			throw new IllegalArgumentException("No resource named [" + resourceName + "] found");
-		}
-		return ExceptionUtils.doRethrowing(() -> resource.openStream());
-	}
 
 
 	@Override
 	public Optional<String> loadAsStringIfExists(String resourceName) {
-		URL resource = getResourceURL(resourceName);
+		URL resource = getResource(resourceName, getClass());
+		if (resource == null) {
+			resource = getResource("resource" + ((resourceName.length() == 0 || resourceName.charAt(0) != '/') ? "/" : "") + resourceName,
+					getClass());
+		}
 		logger.log("Loading resource named [" + resourceName + "] at [" + resource + "]");
 		try {
 			return resource == null ? Optional.empty() : Optional.of(new String(Files.readAllBytes(Paths.get(resource.toURI()))));
@@ -54,16 +44,6 @@ class ResourceLoaderImpl implements ResourceLoader {
 			e.printStackTrace();
 			return Optional.empty();
 		}
-	}
-	
-	
-	private URL getResourceURL(String resourceName){
-		URL resource = getResource(resourceName, getClass());
-		if (resource == null) {
-			resource = getResource("resource" + ((resourceName.length() == 0 || resourceName.charAt(0) != '/') ? "/" : "") + resourceName,
-					getClass());
-		}
-		return resource;
 	}
 
 

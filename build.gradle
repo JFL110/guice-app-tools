@@ -3,11 +3,13 @@ apply from : 'common-build.gradle'
 dependencies {
 
     // Generally useful java things
-    compile group: 'com.google.guava', name: 'guava', version: '20.0'
+    compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
 
     // JSON
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.6.7'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.7.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.1'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.10.1'
 	
     // Dependency management
     compile group: 'com.google.inject.extensions', name: 'guice-multibindings', version: '4.0'

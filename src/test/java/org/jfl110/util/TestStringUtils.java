@@ -1,7 +1,6 @@
 package org.jfl110.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -11,7 +10,7 @@ import org.junit.Test;
  * @author jim
  */
 public class TestStringUtils {
-	
+
 	/**
 	 * Tests isBlank
 	 */
@@ -26,11 +25,11 @@ public class TestStringUtils {
 		assertFalse(StringUtils.isBlank("hello"));
 		assertFalse(StringUtils.isBlank(" hello"));
 		assertFalse(StringUtils.isBlank(" hello "));
-		
+
 		assertTrue(StringUtils.isBlank("			"));
 	}
-	
-	
+
+
 	/**
 	 * Tests isNotBlank
 	 */
@@ -45,11 +44,18 @@ public class TestStringUtils {
 		assertTrue(StringUtils.isNotBlank("hello"));
 		assertTrue(StringUtils.isNotBlank(" hello"));
 		assertTrue(StringUtils.isNotBlank(" hello "));
-		
+
 		assertFalse(StringUtils.isNotBlank("			"));
 	}
-	
-	
+
+
+	@Test
+	public void testRemovePrefix() {
+		assertEquals("hello", StringUtils.removePrefix("the-prefix-hello", "the-prefix-"));
+		assertEquals("no-prefix", StringUtils.removePrefix("no-prefix", "too-long-to-be-the-prefix"));
+	}
+
+
 	/**
 	 * Coverage bump
 	 */

@@ -23,4 +23,12 @@ public class StringUtils {
 	public static boolean isNotBlank(String str) {
 		return !isBlank(str);
 	}
+
+
+	public static String removePrefix(String s, String prefix) {
+		if (s != null && prefix != null && s.startsWith(prefix)) {
+			return s.substring(prefix.length());
+		}
+		return s;
+	}
 }
