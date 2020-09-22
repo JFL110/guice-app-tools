@@ -27,7 +27,7 @@ class EnumWithCodeDeserializer<K extends Enum<K> & EnumWithCode> extends StdDese
 	}
 
 
-	EnumWithCodeDeserializer(Class<K> clazz, boolean dummyArg) {
+	EnumWithCodeDeserializer(Class<K> clazz) {
 		super(clazz);
 		this.clazz = clazz;
 	}
@@ -49,10 +49,6 @@ class EnumWithCodeDeserializer<K extends Enum<K> & EnumWithCode> extends StdDese
 	@Override
 	public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
 		Class<?> clazz = property.getType().getRawClass();
-		try {
-			return new EnumWithCodeDeserializer(clazz, false);
-		} catch (ClassCastException e) {
-			throw new IllegalStateException("Incorrect usage of this EnumWithCodeDeserializer on type [" + clazz + "]");
-		}
+		return new EnumWithCodeDeserializer(clazz);
 	}
 }

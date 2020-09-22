@@ -58,6 +58,7 @@ public class TestLambdaUtils {
 	public void testEnumWithCode() {
 		assertEquals(TestEnum.VAL_1, LambdaUtils.mapToEnumFromCode("a", TestEnum.class));
 		assertEquals(TestEnum.VAL_2, LambdaUtils.mapToEnumFromCode("b", TestEnum.class));
+		assertEquals(TestEnum.VAL_1, LambdaUtils.mapToEnumFromCodeOptional("a", TestEnum.class).orElse(null));
 		assertFalse(LambdaUtils.mapToEnumFromCodeOptional("not-a-code", TestEnum.class).isPresent());
 
 		assertEquals(ImmutableSet.of("c", "a"), LambdaUtils.mapToEnumCodeSet(ImmutableList.of(TestEnum.VAL_3, TestEnum.VAL_1)));

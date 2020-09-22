@@ -1,14 +1,18 @@
 package org.jfl110.util;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.jfl110.util.ExceptionUtils.ThrowingRunnable;
 import org.jfl110.util.ExceptionUtils.ThrowingSupplier;
 import org.junit.Test;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
 
 /**
  * Tests {@link ExceptionUtils}
@@ -19,18 +23,37 @@ import org.junit.Test;
 public class TestExceptionUtils {
 
 	@Test
-	public void testNoException() {
-		assertEquals("abc", ExceptionUtils.doRethrowing(() -> "abc"));
-
+	public void testRunnableNoException() {
 		Runnable mockRunnable = mock(Runnable.class);
 		ExceptionUtils.doRethrowing(() -> mockRunnable.run());
-		verify(mockRunnable).run();
+		verify(mockRunnable, times(1)).run();
+	}
+
+
+	@Test
+	public void testCallableNoException() {
+		String output = ExceptionUtils.doRethrowing(() -> "abc");
+		assertEquals("abc", output);
 	}
 
 
 	@Test(expected = RuntimeException.class)
-	public void testException() {
-		ExceptionUtils.doRethrowing(() -> {
+	public void testThrowingCallable() {
+		ExceptionUtils.doRethrowing((ThrowingSupplier<Void>) () -> {
+			throw new IOException();
+		});
+	}
+
+
+	@Test(expected = IllegalStateException.class)
+	public void testEnumWithCodeDeserializerNoClassDeserializeException() throws JsonProcessingException, IOException {
+		new EnumWithCodeDeserializer<>(null).deserialize(mock(JsonParser.class), mock(DeserializationContext.class));
+	}
+
+
+	@Test(expected = RuntimeException.class)
+	public void testRunnableCallable() {
+		ExceptionUtils.doRethrowing((ThrowingRunnable) () -> {
 			throw new IOException();
 		});
 	}
